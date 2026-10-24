@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FryMath.Plugin.Runner.AboutDialog"
+        Title="About FryMath Studio"
+        Width="440" Height="280"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        Background="{DynamicResource MathBgBrush}">
+
+    <StackPanel Margin="24" Spacing="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="{DynamicResource MathAccentPurpleBrush}"
+                CornerRadius="{DynamicResource MathRadiusMd}"
+                Width="48" Height="48"
+                HorizontalAlignment="Center">
+            <TextBlock Text="∑"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+
+        <TextBlock Text="FryMath Studio"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource MathTextPrimaryBrush}"
+                   HorizontalAlignment="Center" />
+
+        <TextBlock Text="Version 1.0.0 • Code Fry Dev"
+                   FontSize="12"
+                   Foreground="{DynamicResource MathTextMutedBrush}"
+                   HorizontalAlignment="Center" />
+
+        <TextBlock Text="Interactive mathematics studio, symbolic CAS, and conceptual visual learning laboratory for FryWorld."
+                   FontSize="11"
+                   Foreground="{DynamicResource MathTextSecondaryBrush}"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap" />
+
+        <Button Content="Close"
+                Classes="mathaction"
+                HorizontalAlignment="Center"
+                Click="CloseButton_OnClick"
+                Padding="20,6"
+                Margin="0,6,0,0" />
+    </StackPanel>
+</Window>

@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="FryMath.Plugin.Runner.App"
+             Name="FryMath Studio"
+             RequestedThemeVariant="Dark">
+    <NativeMenu.Menu>
+        <NativeMenu>
+            <NativeMenuItem Header="About FryMath Studio" Click="AboutMenuItem_OnClick" />
+        </NativeMenu>
+    </NativeMenu.Menu>
+    <Application.Styles>
+        <FluentTheme />
+        <materialIcons:MaterialIconStyles />
+        <StyleInclude Source="avares://FryMath.UI/Styles/MathStyles.axaml" />
+    </Application.Styles>
+</Application>

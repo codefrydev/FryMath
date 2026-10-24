@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Neutral Sleek Monotone Dark Theme (No Purple Tint, No Loud Neon) -->
+    <SolidColorBrush x:Key="MathBgBrush" Color="#121316" />
+    <SolidColorBrush x:Key="MathSurfaceBrush" Color="#18191E" />
+    <SolidColorBrush x:Key="MathSurfaceHighBrush" Color="#22242A" />
+    <SolidColorBrush x:Key="MathSurfaceHoverBrush" Color="#2A2C34" />
+    <SolidColorBrush x:Key="MathBorderBrush" Color="#32353E" />
+    <SolidColorBrush x:Key="MathCardBackgroundBrush" Color="#1A1B20" />
+
+    <!-- Clean Monotone Typography -->
+    <SolidColorBrush x:Key="MathTextPrimaryBrush" Color="#F3F4F6" />
+    <SolidColorBrush x:Key="MathTextSecondaryBrush" Color="#D1D5DB" />
+    <SolidColorBrush x:Key="MathTextMutedBrush" Color="#9CA3AF" />
+
+    <!-- Mathematical Graph & Curve Accents (D3 / Observable Palette for High Legibility) -->
+    <SolidColorBrush x:Key="MathAccentPurpleBrush" Color="#A78BFA" />
+    <SolidColorBrush x:Key="MathAccentCyanBrush" Color="#38BDF8" />
+    <SolidColorBrush x:Key="MathAccentEmeraldBrush" Color="#34D399" />
+    <SolidColorBrush x:Key="MathAccentAmberBrush" Color="#FBBF24" />
+    <SolidColorBrush x:Key="MathAccentGoldBrush" Color="#FBBF24" />
+    <SolidColorBrush x:Key="MathAccentRoseBrush" Color="#FB7185" />
+
+    <!-- Corner Radii -->
+    <CornerRadius x:Key="MathRadiusSm">4</CornerRadius>
+    <CornerRadius x:Key="MathRadiusMd">8</CornerRadius>
+    <CornerRadius x:Key="MathRadiusLg">12</CornerRadius>
+    <CornerRadius x:Key="MathRadiusPill">999</CornerRadius>
+
+</ResourceDictionary>

@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FryMath.UI.ViewModels"
+        xmlns:views="using:FryMath.UI.Views"
+        x:Class="FryMath.Plugin.Runner.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="∑ FryMath Studio - Interactive Mathematics &amp; CAS"
+        Width="1360" Height="820"
+        MinWidth="960" MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MathBgBrush}">
+    <views:MathStudioView />
+</Window>

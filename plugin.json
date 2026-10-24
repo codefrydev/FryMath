@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/codefrydev/FryWorld/main/src/FryWorld.Sdk/plugin.schema.json",
+  "sdkVersion": "0.5.0",
+  "id": "com.fryworld.math",
+  "name": "Math Studio",
+  "version": "1.0.0",
+  "author": "Code Fry Dev",
+  "description": "Interactive mathematics studio, symbolic CAS, and conceptual visual learning laboratory for FryWorld.",
+  "releaseNotes": "Initial release of FryMath Studio: interactive 2D calculus canvas with live Math Probe, matrix transformation grid morpher, Fourier epicycle and wave synthesizer with audio, Galton board normal distribution simulator, and Wolfram-style multi-pod solver.",
+  "entryPoint": "MathPlugin.dll",
+  "entryType": "FryMath.Plugin.MathPlugin",
+  "icon": "Calculator",
+  "iconColor": "#A855F7",
+  "category": "Education & Science",
+  "repositoryUrl": "https://github.com/PrashantUnity/FryMath",
+  "isCollectible": true,
+  "dependencies": [],
+  "settingsSchema": {
+    "DefaultLaboratory": {
+      "type": "select",
+      "label": "Default Laboratory Mode",
+      "description": "The initial laboratory view shown when Math Studio launches.",
+      "options": [
+        "Visual Calculus",
+        "Linear Algebra",
+        "Complex & Fractals",
+        "Fourier & Waves",
+        "Probability & Stats",
+        "Dynamical Chaos"
+      ],
+      "default": "Visual Calculus"
+    },
+    "AngleMode": {
+      "type": "select",
+      "label": "Angle Measurement Mode",
+      "description": "Default unit for trigonometric angles.",
+      "options": [
+        "Radians",
+        "Degrees"
+      ],
+      "default": "Radians"
+    },
+    "ShowProbeCurvature": {
+      "type": "boolean",
+      "label": "Show Curvature & Osculating Circle",
+      "description": "Display osculating circle of curvature and normal vector in the live Math Probe.",
+      "default": true
+    },
+    "AudioVolume": {
+      "type": "double",
+      "label": "Fourier Synth Audio Volume",
+      "description": "Output volume multiplier for harmonic wave synthesis audio playback.",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "default": 0.4
+    },
+    "GridTheme": {
+      "type": "select",
+      "label": "Mathematical Canvas Theme",
+      "description": "Visual style for canvas grid, axes, curves, and badges.",
+      "options": [
+        "Dark Electric",
+        "Light Blueprint",
+        "Classic Paper",
+        "Cyberpunk Neon"
+      ],
+      "default": "Dark Electric"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="MathPlugin.csproj" />
+  <Project DefaultStartup="true" Path="Runner/MathPlugin.Runner.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/FryMath.Core/FryMath.Core.csproj" />
+    <Project Path="src/FryMath.UI/FryMath.UI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FryMath.Core.Tests/FryMath.Core.Tests.csproj" />
+    <Project Path="tests/FryMath.UI.Tests/FryMath.UI.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/UiSnapshots/UiSnapshots.csproj" />
+  </Folder>
+</Solution>
