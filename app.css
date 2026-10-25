@@ -54,6 +54,14 @@ html, body {
     box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
 }
 
+.splash-logo-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
+    object-fit: cover;
+}
+
 .splash-title {
     font-size: 28px;
     font-weight: 800;
