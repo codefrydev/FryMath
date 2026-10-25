@@ -7,17 +7,17 @@ public sealed record MathThemeTokens
 {
     public bool IsDark { get; init; } = true;
 
-    // Studio Backgrounds (Neutral Dark Slate, No Purple Tint)
-    public Color BgColor { get; init; } = Color.FromRgb(18, 19, 22); // #121316
-    public Color SurfaceColor { get; init; } = Color.FromRgb(24, 25, 30); // #18191E
-    public Color SurfaceHighColor { get; init; } = Color.FromRgb(34, 36, 42); // #22242A
-    public Color SurfaceHoverColor { get; init; } = Color.FromRgb(42, 44, 52); // #2A2C34
-    public Color BorderColor { get; init; } = Color.FromRgb(50, 53, 62); // #32353E
+    // Studio Backgrounds (Refined Deep Slate Workspace)
+    public Color BgColor { get; init; } = Color.FromRgb(13, 14, 18); // #0D0E12
+    public Color SurfaceColor { get; init; } = Color.FromRgb(19, 21, 28); // #13151C
+    public Color SurfaceHighColor { get; init; } = Color.FromRgb(26, 29, 39); // #1A1D27
+    public Color SurfaceHoverColor { get; init; } = Color.FromRgb(37, 41, 55); // #252937
+    public Color BorderColor { get; init; } = Color.FromRgb(40, 44, 59); // #282C3B
 
     // Text (Clean Monotone Light Grey / Soft White)
-    public Color TextPrimaryColor { get; init; } = Color.FromRgb(243, 244, 246);
-    public Color TextSecondaryColor { get; init; } = Color.FromRgb(209, 213, 219); // #D1D5DB
-    public Color TextMutedColor { get; init; } = Color.FromRgb(156, 163, 175); // #9CA3AF
+    public Color TextPrimaryColor { get; init; } = Color.FromRgb(248, 250, 252);
+    public Color TextSecondaryColor { get; init; } = Color.FromRgb(203, 213, 225); // #CBD5E1
+    public Color TextMutedColor { get; init; } = Color.FromRgb(148, 163, 184); // #94A3B8
 
     // Accents for Mathematical Curves & Graphs (D3 / Observable Palette)
     public Color AccentPurple { get; init; } = Color.FromRgb(167, 139, 250); // Soft lavender #A78BFA

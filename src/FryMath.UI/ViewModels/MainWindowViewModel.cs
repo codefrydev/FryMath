@@ -36,7 +36,46 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     private bool _disposed;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredPresets))]
+    [NotifyPropertyChangedFor(nameof(CurrentLabPresetCount))]
     private string _activeLaboratory = "Visual Calculus";
+
+    [ObservableProperty]
+    private string _activeDomain = "Calculus & Analysis";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredPresets))]
+    [NotifyPropertyChangedFor(nameof(CurrentLabPresetCount))]
+    private bool _filterPresetsByActiveLab = true;
+
+    [ObservableProperty]
+    private bool _isSidebarOpen = true;
+
+    [ObservableProperty]
+    private bool _isSymbolRibbonOpen = true;
+
+    [ObservableProperty]
+    private string _currentPresetTitle = "Taylor Series Expansion of sin(x)";
+
+    public int CurrentLabPresetCount => Presets.Count(p => string.Equals(p.Category, ActiveLaboratory, StringComparison.OrdinalIgnoreCase));
+    public int TotalPresetCount => Presets.Count;
+
+    public IReadOnlyList<LaboratoryItem> AllLaboratories => LaboratoryCatalog.AllLaboratories;
+    public IReadOnlyList<string> DomainCategories => LaboratoryCatalog.Domains;
+
+    public event Action? CanvasResetViewRequested;
+    public event Action? CanvasZoomInRequested;
+    public event Action? CanvasZoomOutRequested;
+
+    partial void OnActiveLaboratoryChanged(string value)
+    {
+        ActiveDomain = LaboratoryCatalog.GetDomain(value);
+        var firstLabPreset = Presets.FirstOrDefault(p => string.Equals(p.Category, value, StringComparison.OrdinalIgnoreCase));
+        if (firstLabPreset != null)
+        {
+            CurrentPresetTitle = firstLabPreset.Title;
+        }
+    }
 
     [ObservableProperty]
     private string _omnibarQuery = "x^3 - 3*x";
@@ -1752,15 +1791,52 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(PresetSearchFilter))
-                return Presets;
+            var query = Presets.AsEnumerable();
 
-            return Presets.Where(p =>
-                p.Title.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase) ||
-                p.Category.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase) ||
-                p.Description.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase));
+            if (FilterPresetsByActiveLab && !string.IsNullOrEmpty(ActiveLaboratory))
+            {
+                var labPresets = query.Where(p => string.Equals(p.Category, ActiveLaboratory, StringComparison.OrdinalIgnoreCase)).ToList();
+                if (labPresets.Count > 0)
+                {
+                    query = labPresets;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(PresetSearchFilter))
+            {
+                query = query.Where(p =>
+                    p.Title.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase) ||
+                    p.Category.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase) ||
+                    p.Description.Contains(PresetSearchFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return query;
         }
     }
+
+    [RelayCommand]
+    public void CanvasResetView() => CanvasResetViewRequested?.Invoke();
+
+    [RelayCommand]
+    public void CanvasZoomIn() => CanvasZoomInRequested?.Invoke();
+
+    [RelayCommand]
+    public void CanvasZoomOut() => CanvasZoomOutRequested?.Invoke();
+
+    [RelayCommand]
+    public void ToggleSidebar() => IsSidebarOpen = !IsSidebarOpen;
+
+    [RelayCommand]
+    public void ToggleSymbolRibbon() => IsSymbolRibbonOpen = !IsSymbolRibbonOpen;
+
+    [RelayCommand]
+    public void SetPresetFilterMode(bool activeLabOnly) => FilterPresetsByActiveLab = activeLabOnly;
+
+    [RelayCommand]
+    public void ClearOmnibar() => OmnibarQuery = string.Empty;
+
+    [RelayCommand]
+    public void ClearPresetSearchFilter() => PresetSearchFilter = string.Empty;
 
     public ObservableCollection<DerivationStep> DerivationSteps { get; } = new();
     public ObservableCollection<CriticalPoint> CriticalPointsList { get; } = new();
@@ -4893,6 +4969,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     {
         if (preset == null) return;
         ActiveLaboratory = preset.Category;
+        CurrentPresetTitle = preset.Title;
 
         if (preset.Category == "Visual Calculus")
         {

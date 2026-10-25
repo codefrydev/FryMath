@@ -406,7 +406,7 @@ public class KnotCanvas : Control
         double cardW = 340;
         double cardH = 175;
         double cardX = w - cardW - 14;
-        double cardY = 14;
+        double cardY = 56;
 
         var cardBrush = new SolidColorBrush(Color.FromArgb(220, 15, 23, 42));
         var cardBorder = new Pen(_tokens.BorderBrush, 1.0);

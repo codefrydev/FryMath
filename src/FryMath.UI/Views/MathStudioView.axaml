@@ -37,35 +37,41 @@
                     <!-- Studio Logo -->
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="0,0,16,0">
                         <Border Background="{DynamicResource MathSurfaceHighBrush}"
-                                BorderBrush="{DynamicResource MathBorderBrush}"
-                                BorderThickness="1"
-                                CornerRadius="6"
-                                Width="30" Height="30">
+                                BorderBrush="{DynamicResource MathAccentCyanBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="8"
+                                Width="32" Height="32">
                             <TextBlock Text="∑"
                                        FontSize="16"
                                        FontWeight="Bold"
-                                       Foreground="{DynamicResource MathTextPrimaryBrush}"
+                                       Foreground="{DynamicResource MathAccentCyanBrush}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="FRYMATH"
-                                       FontSize="13"
-                                       FontWeight="Bold"
-                                       LetterSpacing="1"
-                                       Foreground="{DynamicResource MathTextPrimaryBrush}" />
-                            <TextBlock Text="Interactive Studio &amp; CAS"
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <TextBlock Text="FRYMATH"
+                                           FontSize="13"
+                                           FontWeight="Bold"
+                                           LetterSpacing="1"
+                                           Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                <Border Background="#2038BDF8" CornerRadius="4" Padding="5,1">
+                                    <TextBlock Text="CAS 10.0" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="Interactive Studio &amp; Visual Laboratory"
                                        FontSize="9.5"
                                        Foreground="{DynamicResource MathTextMutedBrush}" />
                         </StackPanel>
                     </StackPanel>
 
                     <!-- Centered Spacious Wolfram-Style Omnibar Input -->
-                    <Grid Grid.Column="1" HorizontalAlignment="Center" Width="520" ColumnDefinitions="*,Auto">
+                    <Grid Grid.Column="1" HorizontalAlignment="Center" Width="560" ColumnDefinitions="*,Auto">
                         <TextBox Grid.Column="0"
                                  Classes="omnibar"
                                  Text="{Binding OmnibarQuery, Mode=TwoWay}"
-                                 PlaceholderText="Enter equation or command (e.g. x^3 - 3*x, sin(x), poincare)...">
+                                 PlaceholderText="Enter formula, CAS expression or lab (e.g. x^3 - 3*x, [[1,0],[0,1]], riemann)..."
+                                 ToolTip.Tip="Natural CAS &amp; Studio Omnibar:&#x0a;• Functions: x^3 - 3*x, sin(x), e^(-x^2)&#x0a;• Matrices: [[1, 2], [3, 4]]&#x0a;• Vector Fields: &lt;-y, x&gt;&#x0a;• 3D Surfaces: z = x^2 + y^2&#x0a;• Direct Lab Jump: riemann, poincare, quantum, fluid, fourier">
                             <TextBox.KeyBindings>
                                 <KeyBinding Gesture="Enter" Command="{Binding ExecuteOmnibarCommand}" />
                             </TextBox.KeyBindings>
@@ -76,392 +82,589 @@
                                 Margin="8,0,0,0"
                                 Padding="12,8">
                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                <material:MaterialIcon Kind="Magnify" Width="15" Height="15" Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                                <material:MaterialIcon Kind="Magnify" Width="15" Height="15" Foreground="{DynamicResource MathAccentCyanBrush}" />
                                 <TextBlock Text="Compute &amp; Plot" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                <Border Background="#1F232D" CornerRadius="3" Padding="3,1" Margin="2,0,0,0">
+                                    <TextBlock Text="↵" FontSize="10" Foreground="{DynamicResource MathTextMutedBrush}" />
+                                </Border>
                             </StackPanel>
                         </Button>
                     </Grid>
 
                     <!-- Quick Utilities -->
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="16,0,0,0">
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center" Margin="16,0,0,0">
+                        <Button Classes="mathaction"
+                                Command="{Binding ToggleSymbolRibbonCommand}"
+                                ToolTip.Tip="Toggle Math Symbols Virtual Keypad"
+                                Padding="8,6">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <material:MaterialIcon Kind="KeyboardOutline" Width="14" Height="14" Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                                <TextBlock Text="Math Pad" FontSize="11" Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                            </StackPanel>
+                        </Button>
                         <Button Classes="mathaction"
                                 Command="{Binding SaveCurrentStateAsPresetCommand}"
                                 ToolTip.Tip="Save current configuration as custom preset"
                                 Padding="8,6">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
                                 <material:MaterialIcon Kind="StarOutline" Width="14" Height="14" Foreground="{DynamicResource MathTextSecondaryBrush}" />
                                 <TextBlock Text="Save Preset" FontSize="11" Foreground="{DynamicResource MathTextPrimaryBrush}" />
                             </StackPanel>
                         </Button>
+                        <Button Classes="mathaction"
+                                Command="{Binding CanvasResetViewCommand}"
+                                ToolTip.Tip="Reset Viewport to Default Coordinates"
+                                Padding="8,6">
+                            <material:MaterialIcon Kind="HomeOutline" Width="14" Height="14" Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                        </Button>
                     </StackPanel>
                 </Grid>
 
-                <!-- Row 2: Secondary Navigation Strip (Math Chips + Scrollable Lab Tabs) -->
+                <!-- Row 2: Desmos-Style Virtual Math Keypad (Collapsible) -->
                 <Border Background="{DynamicResource MathBgBrush}"
                         BorderBrush="{DynamicResource MathBorderBrush}"
                         BorderThickness="0,1,0,0"
-                        Padding="12,4">
+                        Padding="12,5"
+                        IsVisible="{Binding IsSymbolRibbonOpen}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                            <!-- Label -->
+                            <TextBlock Text="QUICK MATH:" FontSize="9.5" FontWeight="Bold" LetterSpacing="0.5" Foreground="{DynamicResource MathTextMutedBrush}" VerticalAlignment="Center" Margin="0,0,4,0" />
+
+                            <!-- Constants -->
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="π" Content="π" ToolTip.Tip="Pi constant (3.14159...)" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="e" Content="e" ToolTip.Tip="Euler's constant (2.71828...)" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="i" Content="i" ToolTip.Tip="Imaginary unit (√-1)" />
+
+                            <!-- Divider -->
+                            <Rectangle Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="3,3" />
+
+                            <!-- Basic Powers & Roots -->
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="^2" Content="x²" ToolTip.Tip="Square power" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="^3" Content="x³" ToolTip.Tip="Cube power" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="^" Content="xⁿ" ToolTip.Tip="N-th exponent" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="sqrt()" Content="√x" ToolTip.Tip="Square root" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="1/x" Content="1/x" ToolTip.Tip="Reciprocal" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="abs()" Content="|x|" ToolTip.Tip="Absolute value" />
+
+                            <!-- Divider -->
+                            <Rectangle Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="3,3" />
+
+                            <!-- Trigonometry -->
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="sin()" Content="sin" ToolTip.Tip="Sine function" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="cos()" Content="cos" ToolTip.Tip="Cosine function" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="tan()" Content="tan" ToolTip.Tip="Tangent function" />
+
+                            <!-- Divider -->
+                            <Rectangle Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="3,3" />
+
+                            <!-- Exponentials & Logarithms -->
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="exp()" Content="eˣ" ToolTip.Tip="Natural exponential" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="ln()" Content="ln" ToolTip.Tip="Natural logarithm" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="log()" Content="log" ToolTip.Tip="Base-10 logarithm" />
+
+                            <!-- Divider -->
+                            <Rectangle Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="3,3" />
+
+                            <!-- Analysis & Linear Algebra -->
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="d/dx" Content="d/dx" ToolTip.Tip="Leibniz derivative" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="int" Content="∫dx" ToolTip.Tip="Indefinite / Definite integral" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="z = " Content="z=" ToolTip.Tip="3D Surface equation" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="&lt;-y, x&gt;" Content="&lt;P,Q&gt;" ToolTip.Tip="2D Vector field" />
+                            <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="[[1, 0], [0, 1]]" Content="[[M]]" ToolTip.Tip="2x2 Transformation matrix" />
+
+                            <!-- Divider -->
+                            <Rectangle Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="3,3" />
+
+                            <!-- Quick Clear -->
+                            <Button Classes="mathchip" Command="{Binding ClearOmnibarCommand}" Content="✕ Clear" ToolTip.Tip="Clear formula input" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- Row 3: 31-Laboratory Navigation Strip -->
+                <Border Background="{DynamicResource MathSurfaceBrush}"
+                        BorderBrush="{DynamicResource MathBorderBrush}"
+                        BorderThickness="0,1,0,0"
+                        Padding="12,5">
                     <Grid ColumnDefinitions="Auto,Auto,*">
-                        <!-- Quick Math Symbol Chips -->
-                        <ScrollViewer Grid.Column="0"
-                                      HorizontalScrollBarVisibility="Auto"
-                                      VerticalScrollBarVisibility="Disabled"
-                                      Margin="0,0,8,0">
-                            <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="π" Content="π" ToolTip.Tip="Pi constant" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="e" Content="e" ToolTip.Tip="Euler's constant" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="sqrt()" Content="√x" ToolTip.Tip="Square root" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="^2" Content="x²" ToolTip.Tip="Square power" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="sin()" Content="sin" ToolTip.Tip="Sine" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="cos()" Content="cos" ToolTip.Tip="Cosine" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="exp()" Content="eˣ" ToolTip.Tip="Exponential" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="ln()" Content="ln" ToolTip.Tip="Natural log" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="z = " Content="z=" ToolTip.Tip="3D Surface" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="&lt;-y, x&gt;" Content="&lt;P,Q&gt;" ToolTip.Tip="Vector Field" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="[[1, 0], [0, 1]]" Content="[[M]]" ToolTip.Tip="2x2 Matrix" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="mandelbrot" Content="Mandelbrot" ToolTip.Tip="Fractals" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="chladni" Content="Chladni" ToolTip.Tip="Wave PDE" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="helix" Content="Helix" ToolTip.Tip="Space Curves 3D" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="zeta" Content="ζ(s)" ToolTip.Tip="Riemann Zeta &amp; Primes" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="heat" Content="Heat" ToolTip.Tip="2D Heat Diffusion" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="psi" Content="ψ(x)" ToolTip.Tip="Quantum Wave Mechanics" />
-                                <Button Classes="mathchip" Command="{Binding InsertSymbolCommand}" CommandParameter="millennium" Content="👑 $7M" ToolTip.Tip="Clay Millennium Problems" />
+
+                        <!-- Active Lab Quick Jump Dropdown Menu -->
+                        <Button Grid.Column="0"
+                                Classes="mathaction"
+                                Padding="8,4"
+                                ToolTip.Tip="Browse all 31 Laboratories">
+                            <Button.Flyout>
+                                <Flyout Placement="BottomEdgeAlignedLeft">
+                                    <Border Background="{DynamicResource MathSurfaceBrush}"
+                                            BorderBrush="{DynamicResource MathBorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="10"
+                                            Padding="12"
+                                            Width="380"
+                                            MaxHeight="500">
+                                        <Grid RowDefinitions="Auto,*">
+                                            <TextBlock Text="ALL 31 MATHEMATICAL LABORATORIES"
+                                                       FontSize="11"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource MathTextMutedBrush}"
+                                                       Margin="4,0,0,8" />
+                                            <ScrollViewer Grid.Row="1">
+                                                <ItemsControl ItemsSource="{Binding AllLaboratories}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="vm:LaboratoryItem">
+                                                            <Button Background="Transparent"
+                                                                    BorderThickness="0"
+                                                                    Padding="6,6"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    HorizontalContentAlignment="Stretch"
+                                                                    Command="{Binding $parent[UserControl].((vm:MainWindowViewModel)DataContext).SelectLaboratoryCommand}"
+                                                                    CommandParameter="{Binding Name}">
+                                                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                                                    <Border Grid.Column="0"
+                                                                            Background="{DynamicResource MathSurfaceHighBrush}"
+                                                                            CornerRadius="6"
+                                                                            Width="26" Height="26"
+                                                                            Margin="0,0,8,0">
+                                                                        <material:MaterialIcon Kind="{Binding IconKind}"
+                                                                                              Width="14" Height="14"
+                                                                                              Foreground="{DynamicResource MathAccentCyanBrush}"
+                                                                                              HorizontalAlignment="Center"
+                                                                                              VerticalAlignment="Center" />
+                                                                    </Border>
+                                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Name}"
+                                                                                   FontSize="11.5"
+                                                                                   FontWeight="SemiBold"
+                                                                                   Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                                                        <TextBlock Text="{Binding Domain}"
+                                                                                   FontSize="9.5"
+                                                                                   Foreground="{DynamicResource MathTextMutedBrush}" />
+                                                                    </StackPanel>
+                                                                    <material:MaterialIcon Grid.Column="2"
+                                                                                          Kind="ChevronRight"
+                                                                                          Width="14" Height="14"
+                                                                                          Foreground="{DynamicResource MathTextMutedBrush}" />
+                                                                </Grid>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </Border>
+                                </Flyout>
+                            </Button.Flyout>
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <material:MaterialIcon Kind="CompassOutline" Width="15" Height="15" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                                <TextBlock Text="{Binding ActiveLaboratory}" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                <material:MaterialIcon Kind="MenuDown" Width="14" Height="14" Foreground="{DynamicResource MathTextMutedBrush}" />
+                            </StackPanel>
+                        </Button>
+
+                        <Rectangle Grid.Column="1" Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="6,2,8,2" />
+
+                        <!-- Horizontal Scrollable Laboratory Navigation Tabs (All 31 with Active State) -->
+                        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Visual Calculus'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Visual Calculus">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ChartBellCurve" Width="14" Height="14" />
+                                        <TextBlock Text="Calculus" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Linear Algebra'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Linear Algebra">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="VectorRectangle" Width="14" Height="14" />
+                                        <TextBlock Text="Matrices" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Fourier &amp; Waves'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Fourier &amp; Waves">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Waveform" Width="14" Height="14" />
+                                        <TextBlock Text="Waves" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Probability &amp; Stats'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Probability &amp; Stats">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="DotsGrid" Width="14" Height="14" />
+                                        <TextBlock Text="Plinko" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Dynamical Chaos'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Dynamical Chaos">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="WeatherHurricane" Width="14" Height="14" />
+                                        <TextBlock Text="Chaos" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Vector Fields &amp; ODEs'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Vector Fields &amp; ODEs">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="WeatherWindy" Width="14" Height="14" />
+                                        <TextBlock Text="Flow &amp; ODEs" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Complex &amp; Conformal'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Complex &amp; Conformal">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="CircleDouble" Width="14" Height="14" />
+                                        <TextBlock Text="Complex" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Surfaces &amp; 3D'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Surfaces &amp; 3D">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="CubeOutline" Width="14" Height="14" />
+                                        <TextBlock Text="3D Surfaces" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Fractals &amp; Chaos'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Fractals &amp; Chaos">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ShapePlus" Width="14" Height="14" />
+                                        <TextBlock Text="Fractals" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='PDE &amp; Waves'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="PDE &amp; Waves">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Waves" Width="14" Height="14" />
+                                        <TextBlock Text="PDE Waves" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Space Curves 3D'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Space Curves 3D">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="VectorPolyline" Width="14" Height="14" />
+                                        <TextBlock Text="Curves 3D" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Zeta &amp; Primes'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Zeta &amp; Primes">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Sigma" Width="14" Height="14" />
+                                        <TextBlock Text="Zeta &amp; Primes" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Heat &amp; Diffusion'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Heat &amp; Diffusion">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Fire" Width="14" Height="14" />
+                                        <TextBlock Text="Heat &amp; Diffusion" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Quantum &amp; Waves'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Quantum &amp; Waves">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Atom" Width="14" Height="14" />
+                                        <TextBlock Text="Quantum" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Relativity &amp; Spacetime'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Relativity &amp; Spacetime">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="RocketLaunch" Width="14" Height="14" />
+                                        <TextBlock Text="Relativity" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Fluid Dynamics'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Fluid Dynamics">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="WeatherWindy" Width="14" Height="14" />
+                                        <TextBlock Text="Fluids" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Topology &amp; 4D Manifolds'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Topology &amp; 4D Manifolds">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="CubeOutline" Width="14" Height="14" />
+                                        <TextBlock Text="4D Topology" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Celestial &amp; N-Body'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Celestial &amp; N-Body">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Orbit" Width="14" Height="14" />
+                                        <TextBlock Text="Celestial" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Hyperbolic Geometry'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Hyperbolic Geometry">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="AngleAcute" Width="14" Height="14" />
+                                        <TextBlock Text="Hyperbolic" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Information &amp; Entropy'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Information &amp; Entropy">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="InformationOutline" Width="14" Height="14" />
+                                        <TextBlock Text="Information" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Classical Mechanics'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Classical Mechanics">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="AxisArrow" Width="14" Height="14" />
+                                        <TextBlock Text="Lagrangian" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Cryptography &amp; Finite Fields'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Cryptography &amp; Finite Fields">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="KeyOutline" Width="14" Height="14" />
+                                        <TextBlock Text="Crypto" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Discrete Dynamics &amp; Chaos'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Discrete Dynamics &amp; Chaos">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ChartTimelineVariant" Width="14" Height="14" />
+                                        <TextBlock Text="Dynamics" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Bifurcation &amp; Catastrophe Theory'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Bifurcation &amp; Catastrophe Theory">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ChartBellCurveCumulative" Width="14" Height="14" />
+                                        <TextBlock Text="Catastrophe" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Clifford Geometric Algebra'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Clifford Geometric Algebra">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="VectorPolygon" Width="14" Height="14" />
+                                        <TextBlock Text="Clifford Algebra" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Differential Geometry'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Differential Geometry">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Earth" Width="14" Height="14" />
+                                        <TextBlock Text="Differential Geometry" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Knot Theory &amp; Invariants'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Knot Theory &amp; Invariants">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="Gesture" Width="14" Height="14" />
+                                        <TextBlock Text="Knot Theory" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Symplectic &amp; Hamiltonian'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Symplectic &amp; Hamiltonian">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="CompassRose" Width="14" Height="14" />
+                                        <TextBlock Text="Symplectic &amp; Hamiltonian" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Algebraic Topology &amp; Homology'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Algebraic Topology &amp; Homology">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ShapePolygonPlus" Width="14" Height="14" />
+                                        <TextBlock Text="Algebraic Topology" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Lie Algebras &amp; Dynkin'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Lie Algebras &amp; Dynkin">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="AtomVariant" Width="14" Height="14" />
+                                        <TextBlock Text="Lie Algebras &amp; Dynkin" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="labtab"
+                                        Classes.active="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Millennium Problems'}"
+                                        Command="{Binding SelectLaboratoryCommand}"
+                                        CommandParameter="Millennium Problems">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <material:MaterialIcon Kind="ShieldCrown" Width="14" Height="14" Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                        <TextBlock Text="Millennium Problems" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
                         </ScrollViewer>
-
-                        <!-- Vertical Divider -->
-                        <Rectangle Grid.Column="1" Width="1" Fill="{DynamicResource MathBorderBrush}" Margin="4,2,8,2" />
-
-                        <!-- Horizontal Scrollable Laboratory Navigation Tabs -->
-                        <ScrollViewer Grid.Column="2"
-                                      HorizontalScrollBarVisibility="Auto"
-                                      VerticalScrollBarVisibility="Disabled">
-                            <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Visual Calculus">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ChartBellCurve" Width="14" Height="14" />
-                            <TextBlock Text="Calculus" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Linear Algebra">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="VectorRectangle" Width="14" Height="14" />
-                            <TextBlock Text="Matrices" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Fourier &amp; Waves">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Waveform" Width="14" Height="14" />
-                            <TextBlock Text="Waves" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Probability &amp; Stats">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="DotsGrid" Width="14" Height="14" />
-                            <TextBlock Text="Plinko" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Dynamical Chaos">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="WeatherHurricane" Width="14" Height="14" />
-                            <TextBlock Text="Chaos" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Vector Fields &amp; ODEs">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="WeatherWindy" Width="14" Height="14" />
-                            <TextBlock Text="Flow &amp; ODEs" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Complex &amp; Conformal">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="CircleDouble" Width="14" Height="14" />
-                            <TextBlock Text="Complex" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Surfaces &amp; 3D">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="CubeOutline" Width="14" Height="14" />
-                            <TextBlock Text="3D Surfaces" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Fractals &amp; Chaos">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ShapePlus" Width="14" Height="14" />
-                            <TextBlock Text="Fractals" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="PDE &amp; Waves">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Waves" Width="14" Height="14" />
-                            <TextBlock Text="PDE Waves" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Space Curves 3D">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="VectorPolyline" Width="14" Height="14" />
-                            <TextBlock Text="Curves 3D" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Zeta &amp; Primes">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Sigma" Width="14" Height="14" />
-                            <TextBlock Text="Zeta &amp; Primes" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Heat &amp; Diffusion">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Fire" Width="14" Height="14" />
-                            <TextBlock Text="Heat &amp; Diffusion" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Quantum &amp; Waves">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Atom" Width="14" Height="14" />
-                            <TextBlock Text="Quantum" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Relativity &amp; Spacetime">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="RocketLaunch" Width="14" Height="14" />
-                            <TextBlock Text="Relativity" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Fluid Dynamics">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="WeatherWindy" Width="14" Height="14" />
-                            <TextBlock Text="Fluids" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Topology &amp; 4D Manifolds">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="CubeOutline" Width="14" Height="14" />
-                            <TextBlock Text="4D Topology" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Celestial &amp; N-Body">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Orbit" Width="14" Height="14" />
-                            <TextBlock Text="Celestial" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Hyperbolic Geometry">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="AngleAcute" Width="14" Height="14" />
-                            <TextBlock Text="Hyperbolic" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Information &amp; Entropy">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="InformationOutline" Width="14" Height="14" />
-                            <TextBlock Text="Information" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Classical Mechanics">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="AxisArrow" Width="14" Height="14" />
-                            <TextBlock Text="Lagrangian" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Cryptography &amp; Finite Fields">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="KeyOutline" Width="14" Height="14" />
-                            <TextBlock Text="Crypto" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Discrete Dynamics &amp; Chaos">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ChartTimelineVariant" Width="14" Height="14" />
-                            <TextBlock Text="Dynamics" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Bifurcation &amp; Catastrophe Theory">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ChartBellCurveCumulative" Width="14" Height="14" />
-                            <TextBlock Text="Catastrophe" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Clifford Geometric Algebra">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="VectorPolygon" Width="14" Height="14" />
-                            <TextBlock Text="Clifford Algebra" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Differential Geometry">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="Earth" Width="14" Height="14" />
-                            <TextBlock Text="Differential Geometry" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Knot Theory &amp; Invariants">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="VectorPolyline" Width="14" Height="14" />
-                            <TextBlock Text="Knot Theory" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Symplectic &amp; Hamiltonian">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="WeatherHurricane" Width="14" Height="14" />
-                            <TextBlock Text="Symplectic &amp; Hamiltonian" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Algebraic Topology &amp; Homology">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ShapePolygonPlus" Width="14" Height="14" />
-                            <TextBlock Text="Algebraic Topology" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Lie Algebras &amp; Dynkin">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="AtomVariant" Width="14" Height="14" />
-                            <TextBlock Text="Lie Algebras &amp; Dynkin" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Classes="labtab"
-                            Command="{Binding SelectLaboratoryCommand}"
-                            CommandParameter="Millennium Problems">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <material:MaterialIcon Kind="ShieldCrown" Width="14" Height="14" Foreground="{DynamicResource MathTextPrimaryBrush}" />
-                            <TextBlock Text="Millennium Problems" FontWeight="Bold" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </Border>
-</StackPanel>
-</Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
 
         <!-- 2. Main Studio Body -->
-        <Grid Grid.Row="1" ColumnDefinitions="260,*,360">
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,360">
 
-            <!-- Left: Curated Lesson Presets Explorer -->
+            <!-- Left: Curated Lesson Presets Explorer (Collapsible) -->
             <Border Grid.Column="0"
                     Background="{DynamicResource MathSurfaceBrush}"
                     BorderBrush="{DynamicResource MathBorderBrush}"
                     BorderThickness="0,0,1,0"
-                    Padding="12">
-                <Grid RowDefinitions="Auto,Auto,*">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="4,0,0,8">
-                        <TextBlock Text="INTERACTIVE LESSONS"
-                                   FontSize="11"
-                                   FontWeight="Bold"
-                                   Foreground="{DynamicResource MathTextMutedBrush}"
-                                   VerticalAlignment="Center" />
-                        <Button Grid.Column="1"
-                                Classes="mathaction"
-                                Command="{Binding SaveCurrentStateAsPresetCommand}"
-                                ToolTip.Tip="Save current configuration as custom preset"
-                                Padding="6,3">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <material:MaterialIcon Kind="Star" Width="12" Height="12" Foreground="{DynamicResource MathTextPrimaryBrush}" />
-                                <TextBlock Text="Save State" FontSize="10" />
-                            </StackPanel>
+                    Padding="12,10"
+                    Width="280"
+                    IsVisible="{Binding IsSidebarOpen}">
+                <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+                    <!-- Header with Collapse Button -->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                            <material:MaterialIcon Kind="BookOpenOutline" Width="15" Height="15" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                            <TextBlock Text="PRESETS &amp; LESSONS"
+                                       FontSize="11"
+                                       FontWeight="Bold"
+                                       LetterSpacing="0.5"
+                                       Foreground="{DynamicResource MathTextSecondaryBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Button Grid.Column="2"
+                                Classes="canvascontrol"
+                                Width="26" Height="26"
+                                Command="{Binding ToggleSidebarCommand}"
+                                ToolTip.Tip="Collapse Sidebar">
+                            <material:MaterialIcon Kind="ChevronLeft" Width="16" Height="16" />
                         </Button>
                     </Grid>
 
-                    <!-- Filter Search Box -->
-                    <TextBox Grid.Row="1"
-                             Text="{Binding PresetSearchFilter, Mode=TwoWay}"
-                             PlaceholderText="Search lessons &amp; presets..."
-                             FontSize="11"
-                             Padding="8,5"
-                             Margin="0,0,0,10"
-                             CornerRadius="6"
-                             Background="{DynamicResource MathSurfaceHighBrush}"
-                             BorderBrush="{DynamicResource MathBorderBrush}" />
+                    <!-- Segmented Filter Pills: Active Lab vs All Topics -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="0,0,0,10">
+                        <Button Grid.Column="0"
+                                Classes="pillfilter"
+                                Classes.active="{Binding FilterPresetsByActiveLab}"
+                                Command="{Binding SetPresetFilterModeCommand}"
+                                CommandParameter="{x:True}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Margin="0,0,3,0">
+                            <TextBlock Text="{Binding CurrentLabPresetCount, StringFormat='★ Active Lab ({0})'}"
+                                       FontSize="10.5" />
+                        </Button>
+                        <Button Grid.Column="1"
+                                Classes="pillfilter"
+                                Classes.active="{Binding !FilterPresetsByActiveLab}"
+                                Command="{Binding SetPresetFilterModeCommand}"
+                                CommandParameter="{x:False}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Margin="3,0,0,0">
+                            <TextBlock Text="{Binding TotalPresetCount, StringFormat='All Topics ({0})'}"
+                                       FontSize="10.5" />
+                        </Button>
+                    </Grid>
 
-                    <ScrollViewer Grid.Row="2">
+                    <!-- Search Box with Clear Button -->
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                        <TextBox Grid.Column="0"
+                                 Classes="omnibar"
+                                 Text="{Binding PresetSearchFilter, Mode=TwoWay}"
+                                 PlaceholderText="Filter lessons &amp; presets..."
+                                 FontSize="11"
+                                 Padding="8,5"
+                                 CornerRadius="6" />
+                        <Button Grid.Column="1"
+                                Classes="mathaction"
+                                Command="{Binding ClearPresetSearchFilterCommand}"
+                                Margin="4,0,0,0"
+                                Padding="6,6"
+                                IsVisible="{Binding PresetSearchFilter, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                ToolTip.Tip="Clear filter">
+                            <material:MaterialIcon Kind="Close" Width="12" Height="12" />
+                        </Button>
+                    </Grid>
+
+                    <!-- Scrollable Preset Cards -->
+                    <ScrollViewer Grid.Row="3">
                         <ItemsControl ItemsSource="{Binding FilteredPresets}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="presets:MathPreset">
@@ -473,21 +676,36 @@
                                                 HorizontalContentAlignment="Stretch"
                                                 Command="{Binding $parent[UserControl].((vm:MainWindowViewModel)DataContext).LoadPresetCommand}"
                                                 CommandParameter="{Binding}">
-                                            <StackPanel Spacing="4">
-                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                                        Background="{DynamicResource MathSurfaceHighBrush}"
+                                                        BorderBrush="{DynamicResource MathBorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="6"
+                                                        Width="28" Height="28"
+                                                        Margin="0,2,10,0"
+                                                        VerticalAlignment="Top">
                                                     <material:MaterialIcon Kind="{Binding IconKind}"
-                                                                          Width="14" Height="14"
-                                                                          Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                                                                          Width="15" Height="15"
+                                                                          Foreground="{DynamicResource MathAccentCyanBrush}"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center" />
+                                                </Border>
+                                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding Title}"
-                                                               FontSize="12"
+                                                               FontSize="11.5"
                                                                FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource MathTextPrimaryBrush}" />
+                                                               Foreground="{DynamicResource MathTextPrimaryBrush}"
+                                                               TextTrimming="CharacterEllipsis" />
                                                 </StackPanel>
-                                                <TextBlock Text="{Binding Description}"
+                                                <TextBlock Grid.Row="1" Grid.Column="1"
+                                                           Text="{Binding Description}"
                                                            FontSize="10"
                                                            Foreground="{DynamicResource MathTextMutedBrush}"
-                                                           TextWrapping="Wrap" />
-                                            </StackPanel>
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,3,0,0"
+                                                           LineHeight="14" />
+                                            </Grid>
                                         </Button>
                                     </Border>
                                 </DataTemplate>
@@ -501,7 +719,8 @@
             <Grid Grid.Column="1">
 
                 <!-- Mode 1: Visual Calculus Canvas -->
-                <controls:MathCanvas2D IsVisible="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Visual Calculus'}"
+                <controls:MathCanvas2D x:Name="CalculusCanvas"
+                                       IsVisible="{Binding ActiveLaboratory, Converter={x:Static ObjectConverters.Equal}, ConverterParameter='Visual Calculus'}"
                                        Functions="{Binding Functions}"
                                        ShowProbe="{Binding ShowProbe}"
                                        ShowTangent="{Binding ShowTangent}"
@@ -860,6 +1079,60 @@
                                            RiemannLiMaxN="{Binding RiemannLiMaxN, Mode=TwoWay}"
                                            RiemannHunterTMin="{Binding RiemannHunterTMin, Mode=TwoWay}"
                                            RiemannHunterTMax="{Binding RiemannHunterTMax, Mode=TwoWay}" />
+
+                <!-- ======================================================== -->
+                <!-- FLOATING ON-CANVAS HUD CONTROLS (DESMOS & MATLAB STYLE)  -->
+                <!-- ======================================================== -->
+
+                <!-- Top-Right: Zoom, Recenter, Keypad & Sidebar Controls -->
+                <Border Classes="canvasoverlay"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="14"
+                        Padding="4">
+                    <StackPanel Orientation="Horizontal" Spacing="3">
+                        <Button Classes="canvascontrol"
+                                Command="{Binding CanvasZoomIn}"
+                                ToolTip.Tip="Zoom In">
+                            <material:MaterialIcon Kind="Plus" Width="16" Height="16" />
+                        </Button>
+                        <Button Classes="canvascontrol"
+                                Command="{Binding CanvasZoomOut}"
+                                ToolTip.Tip="Zoom Out">
+                            <material:MaterialIcon Kind="Minus" Width="16" Height="16" />
+                        </Button>
+                        <Button Classes="canvascontrol"
+                                Command="{Binding CanvasResetView}"
+                                ToolTip.Tip="Recenter / Default View">
+                            <material:MaterialIcon Kind="HomeOutline" Width="16" Height="16" />
+                        </Button>
+                        <Rectangle Width="1" Height="18" Fill="{DynamicResource MathBorderBrush}" Margin="2,0" VerticalAlignment="Center" />
+                        <Button Classes="canvascontrol"
+                                Command="{Binding ToggleSymbolRibbon}"
+                                ToolTip.Tip="Toggle Math Virtual Keypad">
+                            <material:MaterialIcon Kind="KeyboardOutline" Width="16" Height="16" />
+                        </Button>
+                        <Button Classes="canvascontrol"
+                                Command="{Binding ToggleSidebar}"
+                                ToolTip.Tip="Toggle Lessons Sidebar">
+                            <material:MaterialIcon Kind="DockLeft" Width="16" Height="16" />
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <!-- Top-Left: "Lessons & Presets" Pill (Shown when Sidebar is Collapsed) -->
+                <Button Classes="canvaspill"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="14"
+                        Command="{Binding ToggleSidebar}"
+                        IsVisible="{Binding !IsSidebarOpen}"
+                        ToolTip.Tip="Expand Lessons &amp; Presets Catalog">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <material:MaterialIcon Kind="Bookshelf" Width="15" Height="15" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                        <TextBlock Text="Lessons &amp; Presets" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource MathTextPrimaryBrush}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
             </Grid>
 
             <!-- Right: Dynamic Mode-Specific Inspector & Textbook Derivations Drawer -->
@@ -908,27 +1181,43 @@
                                                         CornerRadius="{DynamicResource MathRadiusSm}"
                                                         Padding="8"
                                                         Margin="0,0,0,6">
-                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                                                        <CheckBox Grid.Column="0" IsChecked="{Binding IsVisible}" Margin="0,0,6,0" />
-                                                        <TextBox Grid.Column="1"
+                                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+                                                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5" Margin="0,0,6,0" VerticalAlignment="Center">
+                                                            <CheckBox IsChecked="{Binding IsVisible}" VerticalAlignment="Center" Margin="0" />
+                                                            <Ellipse Width="10" Height="10"
+                                                                     Fill="{Binding Color}"
+                                                                     Stroke="{DynamicResource MathBorderBrush}"
+                                                                     StrokeThickness="1"
+                                                                     VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="{Binding Name, StringFormat='{}{0} ='}"
+                                                                   FontSize="11.5"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="{DynamicResource MathTextSecondaryBrush}"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="0,0,6,0" />
+                                                        <TextBox Grid.Column="2"
                                                                  Text="{Binding ExpressionText, Mode=TwoWay}"
                                                                  FontSize="12"
+                                                                 FontFamily="Consolas, Menlo, monospace"
                                                                  Padding="6,4"
                                                                  Background="{DynamicResource MathSurfaceHighBrush}"
                                                                  BorderThickness="1"
                                                                  BorderBrush="{DynamicResource MathBorderBrush}" />
-                                                        <CheckBox Grid.Column="2"
+                                                        <CheckBox Grid.Column="3"
                                                                   IsChecked="{Binding ShowDerivative}"
-                                                                  ToolTip.Tip="Show Derivative Curve (Dashed)"
+                                                                  ToolTip.Tip="Show Derivative Curve f'(x) (Dashed)"
                                                                   Margin="6,0,0,0">
-                                                            <TextBlock Text="d/dx" FontSize="10" Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                                                            <TextBlock Text="d/dx" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource MathAccentCyanBrush}" />
                                                         </CheckBox>
-                                                        <Button Grid.Column="3"
+                                                        <Button Grid.Column="4"
                                                                 Classes="mathaction"
                                                                 Command="{Binding $parent[UserControl].((vm:MainWindowViewModel)DataContext).RemoveFunctionCommand}"
                                                                 CommandParameter="{Binding}"
                                                                 Margin="6,0,0,0"
-                                                                Padding="4,2">
+                                                                Padding="4,2"
+                                                                ToolTip.Tip="Remove Curve">
                                                             <material:MaterialIcon Kind="Close" Width="10" Height="10" />
                                                         </Button>
                                                     </Grid>
@@ -6550,18 +6839,42 @@
                 Background="{DynamicResource MathSurfaceBrush}"
                 BorderBrush="{DynamicResource MathBorderBrush}"
                 BorderThickness="0,1,0,0"
-                Padding="16,6">
+                Padding="14,5">
             <Grid ColumnDefinitions="Auto,*,Auto">
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12">
-                    <TextBlock Text="Laboratory: " FontSize="11" Foreground="{DynamicResource MathTextMutedBrush}" />
-                    <TextBlock Text="{Binding ActiveLaboratory}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource MathTextPrimaryBrush}" />
-                    <TextBlock Text="•  CAS Symbolic Engine: Online" FontSize="11" Foreground="{DynamicResource MathTextMutedBrush}" />
+                <!-- Left: Domain Pill, Active Lab, & Current Preset -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <Border Background="{DynamicResource MathSurfaceHighBrush}"
+                            BorderBrush="{DynamicResource MathBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{DynamicResource MathRadiusPill}"
+                            Padding="8,2">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <material:MaterialIcon Kind="CompassOutline" Width="12" Height="12" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                            <TextBlock Text="{Binding ActiveDomain}" FontSize="10.5" FontWeight="SemiBold" Foreground="{DynamicResource MathAccentCyanBrush}" />
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="{Binding ActiveLaboratory}" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource MathTextPrimaryBrush}" VerticalAlignment="Center" />
+                    <Rectangle Width="1" Height="12" Fill="{DynamicResource MathBorderBrush}" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                        <material:MaterialIcon Kind="BookOpenOutline" Width="12" Height="12" Foreground="{DynamicResource MathTextTertiaryBrush}" />
+                        <TextBlock Text="{Binding CurrentPresetTitle}" FontSize="10.5" Foreground="{DynamicResource MathTextSecondaryBrush}" />
+                    </StackPanel>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14">
-                    <TextBlock Text="Scroll to Zoom  •  Drag to Pan  •  Hover to Probe  •  Drag Pills to Set Bounds"
-                               FontSize="11"
-                               Foreground="{DynamicResource MathTextMutedBrush}" />
+                <!-- Center: CAS Symbolic Engine Heartbeat -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="7" VerticalAlignment="Center">
+                    <Border Width="6" Height="6" CornerRadius="3" Background="#10B981" VerticalAlignment="Center" />
+                    <TextBlock Text="CAS 10.0 Engine: Ready" FontSize="10.5" FontWeight="Medium" Foreground="{DynamicResource MathTextSecondaryBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="•" FontSize="10" Foreground="{DynamicResource MathTextTertiaryBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="Double Precision IEEE 754" FontSize="10" Foreground="{DynamicResource MathTextMutedBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Right: Quick Navigation & Mouse Hints -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="Scroll to Zoom  •  Drag to Pan  •  Click to Probe"
+                               FontSize="10.5"
+                               Foreground="{DynamicResource MathTextMutedBrush}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Grid>
         </Border>

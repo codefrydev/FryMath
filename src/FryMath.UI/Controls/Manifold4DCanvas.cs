@@ -357,7 +357,7 @@ public class Manifold4DCanvas : Control
         double bw = ft.Width + 20;
         double bh = 28;
         double bx = w - bw - 16;
-        double by = 16;
+        double by = 56;
 
         var bRect = new Rect(bx, by, bw, bh);
         context.FillRectangle(new SolidColorBrush(Color.FromArgb(210, 24, 20, 39)), bRect, 6);

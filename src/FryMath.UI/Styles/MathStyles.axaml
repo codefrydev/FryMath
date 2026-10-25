@@ -1,21 +1,22 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Laboratory Navigation Tab Button (Monotone Light Grey & Slate) -->
+    <!-- Laboratory Navigation Tab Button (Modern Sleek with Active Accent Glow) -->
     <Style Selector="Button.labtab">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource MathTextMutedBrush}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
         <Setter Property="Padding" Value="10,5"/>
         <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="11.5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Transitions">
             <Transitions>
-                <BrushTransition Property="Background" Duration="0:0:0.1"/>
-                <BrushTransition Property="Foreground" Duration="0:0:0.1"/>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="Foreground" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
             </Transitions>
         </Setter>
     </Style>
@@ -24,42 +25,72 @@
         <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
     </Style>
     <Style Selector="Button.labtab.active">
-        <Setter Property="Background" Value="{DynamicResource MathSurfaceHighBrush}"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceSelectedBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
-    <!-- Sleek Studio Action Buttons (Neutral Monotone) -->
+    <!-- Domain Category Selector Tabs (High-Level Laboratory Groups) -->
+    <Style Selector="Button.domainchip">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextMutedBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusPill}"/>
+        <Setter Property="Padding" Value="12,5"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="Foreground" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.domainchip:pointerover">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.domainchip.active">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceSelectedBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <!-- Sleek Studio Action Buttons -->
     <Style Selector="Button.mathaction">
         <Setter Property="Background" Value="{DynamicResource MathSurfaceHighBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="5"/>
-        <Setter Property="Padding" Value="9,5"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
+        <Setter Property="Padding" Value="10,6"/>
         <Setter Property="FontSize" Value="11.5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Transitions">
             <Transitions>
-                <BrushTransition Property="Background" Duration="0:0:0.1"/>
-                <BrushTransition Property="BorderBrush" Duration="0:0:0.1"/>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
             </Transitions>
         </Setter>
     </Style>
     <Style Selector="Button.mathaction:pointerover">
         <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
     </Style>
 
-    <!-- Compact Math Symbol Chip (Subtle Slate, Monotone) -->
+    <!-- Compact Math Symbol Chip (Virtual Keypad Buttons) -->
     <Style Selector="Button.mathchip">
-        <Setter Property="Background" Value="#1C1E24"/>
+        <Setter Property="Background" Value="{DynamicResource MathCardBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource MathTextSecondaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="Padding" Value="6,3"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusXs}"/>
+        <Setter Property="Padding" Value="7,3.5"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontFamily" Value="Consolas, Menlo, monospace"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -71,9 +102,9 @@
         </Setter>
     </Style>
     <Style Selector="Button.mathchip:pointerover">
-        <Setter Property="Background" Value="#262831"/>
-        <Setter Property="Foreground" Value="#F3F4F6"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
     </Style>
 
     <!-- Wolfram-Style Omnibar Input -->
@@ -82,37 +113,135 @@
         <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.15"/>
+            </Transitions>
+        </Setter>
     </Style>
     <Style Selector="TextBox.omnibar:focus">
-        <Setter Property="BorderBrush" Value="#6B7280"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceSelectedBrush}"/>
     </Style>
 
-    <!-- Interactive Lesson Card -->
+    <!-- Interactive Lesson Preset Card (Tactile, Educational) -->
     <Style Selector="Border.lessoncard">
-        <Setter Property="Background" Value="{DynamicResource MathSurfaceBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource MathCardBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathBorderSubtleBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusMd}"/>
-        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Padding" Value="10,9"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Transitions">
             <Transitions>
-                <BrushTransition Property="Background" Duration="0:0:0.1"/>
-                <BrushTransition Property="BorderBrush" Duration="0:0:0.1"/>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
             </Transitions>
         </Setter>
     </Style>
     <Style Selector="Border.lessoncard:pointerover">
         <Setter Property="Background" Value="{DynamicResource MathSurfaceHighBrush}"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+    </Style>
+
+    <!-- Floating Canvas Controls (Desmos Style On-Canvas Zoom & Navigation) -->
+    <Style Selector="Button.canvascontrol">
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Background" Value="{DynamicResource MathGlassBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextSecondaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathGlassBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="Foreground" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.canvascontrol:pointerover">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+    </Style>
+
+    <!-- Floating HUD Overlay Container -->
+    <Style Selector="Border.canvasoverlay">
+        <Setter Property="Background" Value="{DynamicResource MathGlassBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathGlassBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusMd}"/>
+        <Setter Property="Padding" Value="6"/>
+    </Style>
+
+    <!-- Floating Canvas Pill Button -->
+    <Style Selector="Button.canvaspill">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Background" Value="{DynamicResource MathGlassBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextSecondaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathGlassBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusPill}"/>
+        <Setter Property="Padding" Value="12,0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="Foreground" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.canvaspill:pointerover">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+    </Style>
+
+    <!-- Segmented Filter Pill Buttons (e.g. Current Lab vs All Topics) -->
+    <Style Selector="Button.pillfilter">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextMutedBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusPill}"/>
+        <Setter Property="Padding" Value="10,4"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.12"/>
+                <BrushTransition Property="Foreground" Duration="0:0:0.12"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.12"/>
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Button.pillfilter:pointerover">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.pillfilter.active">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceSelectedBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
     <!-- Visual Builder Panel -->
     <Style Selector="Border.builderbox">
-        <Setter Property="Background" Value="#18191E"/>
+        <Setter Property="Background" Value="{DynamicResource MathCardBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusMd}"/>
@@ -121,46 +250,84 @@
 
     <!-- Quick Formula / Symbol Insertion Chip -->
     <Style Selector="Button.quickchip">
-        <Setter Property="Background" Value="#1C1E24"/>
+        <Setter Property="Background" Value="{DynamicResource MathCardBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource MathTextSecondaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="Padding" Value="6,3"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusXs}"/>
+        <Setter Property="Padding" Value="7,3"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontFamily" Value="Consolas, Menlo, monospace"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.1"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.1"/>
+            </Transitions>
+        </Setter>
     </Style>
     <Style Selector="Button.quickchip:pointerover">
-        <Setter Property="Background" Value="#262831"/>
-        <Setter Property="Foreground" Value="#F3F4F6"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
     </Style>
 
     <!-- Visual Builder Action Button -->
     <Style Selector="Button.actionpill">
-        <Setter Property="Background" Value="#202228"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHighBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource MathTextPrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
         <Setter Property="Padding" Value="8,4"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.1"/>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.1"/>
+            </Transitions>
+        </Setter>
     </Style>
     <Style Selector="Button.actionpill:pointerover">
-        <Setter Property="Background" Value="#2A2C34"/>
-        <Setter Property="BorderBrush" Value="#4B5563"/>
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHoverBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathAccentCyanBrush}"/>
     </Style>
 
     <!-- Matrix Cell Container -->
     <Style Selector="Border.matrixcell">
-        <Setter Property="Background" Value="#141519"/>
+        <Setter Property="Background" Value="{DynamicResource MathBgBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
         <Setter Property="Padding" Value="4,2"/>
+    </Style>
+
+    <!-- Enhanced Precision Mathematical Slider -->
+    <Style Selector="Slider">
+        <Setter Property="Foreground" Value="{DynamicResource MathAccentCyanBrush}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <!-- Clean Math CheckBox -->
+    <Style Selector="CheckBox">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FontSize" Value="11.5"/>
+    </Style>
+
+    <!-- High-Precision Numeric Stepper -->
+    <Style Selector="NumericUpDown">
+        <Setter Property="Background" Value="{DynamicResource MathSurfaceHighBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MathBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource MathRadiusSm}"/>
+        <Setter Property="FontSize" Value="11.5"/>
+    </Style>
+
+    <!-- Minimalist Auto-Hiding Scrollbars -->
+    <Style Selector="ScrollBar">
+        <Setter Property="AllowAutoHide" Value="True"/>
     </Style>
 
 </Styles>

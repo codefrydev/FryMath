@@ -945,7 +945,7 @@ public class EllipticCurveCanvas : Control
         double hudW = bounds.Width - 60;
         double hudH = 34;
         double hudX = 30;
-        double hudY = 16;
+        double hudY = 56;
 
         var hudRect = new Rect(hudX, hudY, hudW, hudH);
         context.FillRectangle(new SolidColorBrush(Color.FromArgb(220, 24, 20, 39)), hudRect);

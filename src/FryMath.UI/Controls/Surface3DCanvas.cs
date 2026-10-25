@@ -394,7 +394,7 @@ public class Surface3DCanvas : Control
         double hudW = 270;
         double hudH = 135;
         double hudX = w - hudW - 16;
-        double hudY = 16;
+        double hudY = 56;
 
         var hudRect = new Rect(hudX, hudY, hudW, hudH);
         context.FillRectangle(new SolidColorBrush(Color.FromArgb(235, 15, 23, 42)), hudRect, 6);

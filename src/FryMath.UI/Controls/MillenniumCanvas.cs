@@ -465,7 +465,7 @@ public class MillenniumCanvas : Control
         RenderSiegelZOscillogram(context, rectLeft, 10.0, 52.0, tokens);
 
         // Right: Hilbert-Pólya Operator Spectrum
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 440), 146, "HILBERT-PÓLYA QUANTUM OPERATOR ATTACK", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 440), 146, "HILBERT-PÓLYA QUANTUM OPERATOR ATTACK", [
             ("OPERATOR:", "H = -i (x ∂_x + 1/2)  |  H ψ = E ψ"),
             ("HILBERT SPACE:", "Alain Connes Adèle Space L²(𝔸_ℚ^× / ℚ^×)"),
             ("SELF-ADJOINTNESS:", "Defect Indices (0, 0) ⇒ All Eₙ ∈ ℝ ⇒ RH Guaranteed"),
@@ -475,7 +475,7 @@ public class MillenniumCanvas : Control
         ], tokens);
 
         // Lower: Quantum Energy Ladder vs Riemann Zeros
-        double ladderTop = rectRight.Y + 180;
+        double ladderTop = rectRight.Y + 214;
         double ladderH = rectRight.Bottom - ladderTop - 30;
         var axisPen = new Pen(new SolidColorBrush(Color.FromArgb(80, 255, 255, 255)), 1.0);
         context.DrawLine(axisPen, new Point(rectRight.X + 30, ladderTop), new Point(rectRight.X + 30, rectRight.Bottom - 30));
@@ -559,7 +559,7 @@ public class MillenniumCanvas : Control
         }
 
         // Right: de Bruijn-Newman Theory HUD
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 440), 154, "de BRUIJN-NEWMAN DYNAMICAL FLOW (Λ = 0)", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 440), 154, "de BRUIJN-NEWMAN DYNAMICAL FLOW (Λ = 0)", [
             ("HEAT EVOLUTION:", "H_t(z) = ∫ e^{t u²} Φ(u) e^{i z u} du  |  ∂_t H_t = -∂_zz H_t"),
             ("NEWMAN CONSTANT Λ:", $"t = {dbState.ParameterT:F3}  |  Ground State Λ = 0.000"),
             ("RODGERS & TAO (2018):", "Theorem: Λ ≥ 0  (Universal Zero Dispersion Bound)"),
@@ -621,7 +621,7 @@ public class MillenniumCanvas : Control
         context.DrawText(barLegend, new Point(rectLeft.X + 32, rectLeft.Bottom - 20));
 
         // Right: Li Criterion HUD
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 440), 154, "XIAN-JIN LI POSITIVITY CRITERION (1997)", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 440), 154, "XIAN-JIN LI POSITIVITY CRITERION (1997)", [
             ("THEOREM:", "RH ⟺ ∀ n ≥ 1: λₙ = ∑_ρ [1 - (1 - 1/ρ)ⁿ] > 0"),
             ("TESTED COEFFICIENTS:", $"{liState.TestedCount} coefficients evaluated (All strictly positive)"),
             ("MINIMUM MARGIN:", $"Min Margin: {liState.MinPositivityMargin:F3} > 0"),
@@ -639,7 +639,7 @@ public class MillenniumCanvas : Control
         RenderSiegelZOscillogram(context, rectLeft, zhState.TMin, zhState.TMax, tokens);
 
         // Right: Turing Verification Certificate HUD
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 440), 160, "AUTOMATED ZERO HUNTER & TURING TEST", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 440), 160, "AUTOMATED ZERO HUNTER & TURING TEST", [
             ("SEARCH INTERVAL:", $"t ∈ [{zhState.TMin:F1}, {zhState.TMax:F1}]"),
             ("ZEROS FOUND ON LINE:", $"{zhState.FoundZeros.Count} roots located (Brent-Dekker Solver)"),
             ("THEORETICAL N(T):", $"{zhState.TheoreticalCountN} zeros expected by argument principle"),
@@ -671,7 +671,7 @@ public class MillenniumCanvas : Control
         RenderSiegelZOscillogram(context, rectLeft, 10.0, 52.0, tokens);
 
         // Right HUD
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 420), 136, "RIEMANN HYPOTHESIS & GUE SPECTRAL REPAIR", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 420), 136, "RIEMANN HYPOTHESIS & GUE SPECTRAL REPAIR", [
             ("CLAY BOUNTY:", "$1,000,000 (OPEN)"),
             ("CONJECTURE:", "All non-trivial zeros lie on Re(s) = 1/2"),
             ("GUE EIGENVALUES:", "Spacing obeys Montgomery-Odlyzko Law"),
@@ -681,7 +681,7 @@ public class MillenniumCanvas : Control
         ], tokens);
 
         // Lower: GUE Curve & Wigner Surmise
-        double graphTop = rectRight.Y + 175;
+        double graphTop = rectRight.Y + 205;
         double baseGraphY = rectRight.Bottom - 45;
         double graphH = Math.Max(50, baseGraphY - graphTop);
         var axisPen = new Pen(new SolidColorBrush(Color.FromArgb(80, 255, 255, 255)), 1.0);
@@ -761,7 +761,7 @@ public class MillenniumCanvas : Control
         }
 
         // Right HUD
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 16, Math.Min(rectRight.Width - 28, 420), 146, "MUSIC OF THE PRIMES & ZERO HARMONICS", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 52, Math.Min(rectRight.Width - 28, 420), 146, "MUSIC OF THE PRIMES & ZERO HARMONICS", [
             ("EXPLICIT FORMULA:", "π_0(x) = R(x) - ∑_ρ li(x^ρ) / ln x"),
             ("HARMONIC RECONSTRUCTION:", "8 Zero waves synthesizing prime quantum steps"),
             ("GIBBS PHENOMENON:", "Zero oscillations reconstruct discontinuities at primes"),
@@ -919,7 +919,7 @@ public class MillenniumCanvas : Control
         context.DrawText(titleLFt, new Point(rectRight.X + 16, rectRight.Y + 12));
 
         // Render BSD HUD Box at top of right half
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 32, Math.Min(rectRight.Width - 28, 420), 136, "BIRCH & SWINNERTON-DYER CONJECTURE", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 48, Math.Min(rectRight.Width - 28, 420), 136, "BIRCH & SWINNERTON-DYER CONJECTURE", [
             ("CLAY BOUNTY:", "$1,000,000 (OPEN)"),
             ("BSD CONJECTURE:", "ord_{s=1} L(E, s) = rank(E(ℚ))"),
             ("ANALYTIC RANK:", $"r = {state.AnalyticRank} (Order of Vanishing at s=1)"),
@@ -929,7 +929,7 @@ public class MillenniumCanvas : Control
         ], tokens);
 
         // Lower Half: L(E, s) Graph
-        double lGraphTop = rectRight.Y + 185;
+        double lGraphTop = rectRight.Y + 198;
         double lGraphY = rectRight.Bottom - 45;
         double lGraphH = Math.Max(50, lGraphY - lGraphTop);
 
@@ -1261,7 +1261,7 @@ public class MillenniumCanvas : Control
         context.DrawText(titleHardFt, new Point(rectRight.X + 16, rectRight.Y + 12));
 
         // Render P vs NP HUD Box at top of right half
-        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 32, Math.Min(rectRight.Width - 28, 420), 136, "P VERSUS NP — PHASE TRANSITION & COMPLEXITY", [
+        RenderGlassHud(context, (int)rectRight.X + 14, (int)rectRight.Y + 48, Math.Min(rectRight.Width - 28, 420), 136, "P VERSUS NP — PHASE TRANSITION & COMPLEXITY", [
             ("CLAY BOUNTY:", "$1,000,000 (OPEN)"),
             ("COOK-LEVIN THEOREM:", "3-SAT is NP-Complete (∀ L ∈ NP, L ≤_P 3-SAT)"),
             ("CLAUSE RATIO α = m/n:", $"α = {SatAlpha:F3} (Critical Threshold α_c ≈ 4.267)"),
@@ -1271,7 +1271,7 @@ public class MillenniumCanvas : Control
         ], tokens);
 
         // Lower Half: Exponential Hardness Curve (Safely bounded below the HUD)
-        double hardGraphTop = rectRight.Y + 185;
+        double hardGraphTop = rectRight.Y + 198;
         double baseHardY = rectRight.Bottom - 45;
         double hardGraphH = Math.Max(50, baseHardY - hardGraphTop);
 

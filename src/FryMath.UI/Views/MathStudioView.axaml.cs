@@ -23,6 +23,9 @@ public partial class MathStudioView : UserControl
             _currentVm.PlinkoBurstRequested -= OnPlinkoBurst;
             _currentVm.PlinkoResetRequested -= OnPlinkoReset;
             _currentVm.VectorFieldPresetRequested -= OnVectorFieldPreset;
+            _currentVm.CanvasResetViewRequested -= OnCanvasReset;
+            _currentVm.CanvasZoomInRequested -= OnCanvasZoomIn;
+            _currentVm.CanvasZoomOutRequested -= OnCanvasZoomOut;
         }
 
         if (DataContext is MainWindowViewModel vm)
@@ -31,7 +34,30 @@ public partial class MathStudioView : UserControl
             _currentVm.PlinkoBurstRequested += OnPlinkoBurst;
             _currentVm.PlinkoResetRequested += OnPlinkoReset;
             _currentVm.VectorFieldPresetRequested += OnVectorFieldPreset;
+            _currentVm.CanvasResetViewRequested += OnCanvasReset;
+            _currentVm.CanvasZoomInRequested += OnCanvasZoomIn;
+            _currentVm.CanvasZoomOutRequested += OnCanvasZoomOut;
         }
+    }
+
+    private void OnCanvasReset()
+    {
+        var canvas2d = this.FindControl<MathCanvas2D>("CalculusCanvas");
+        canvas2d?.ResetView();
+        var fractal = this.FindControl<FractalCanvas>("FractalCanvas");
+        fractal?.ResetView();
+    }
+
+    private void OnCanvasZoomIn()
+    {
+        var canvas2d = this.FindControl<MathCanvas2D>("CalculusCanvas");
+        canvas2d?.ZoomIn();
+    }
+
+    private void OnCanvasZoomOut()
+    {
+        var canvas2d = this.FindControl<MathCanvas2D>("CalculusCanvas");
+        canvas2d?.ZoomOut();
     }
 
     private void OnPlinkoBurst()

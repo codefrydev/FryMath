@@ -263,6 +263,32 @@ public class MathCanvas2D : Control
         InvalidateVisual();
     }
 
+    public void ZoomIn()
+    {
+        double factor = 1.25;
+        double oldScale = ScalePixelsPerUnit;
+        ScalePixelsPerUnit = Math.Clamp(ScalePixelsPerUnit * factor, 8.0, 600.0);
+        double ratio = ScalePixelsPerUnit / oldScale;
+        double cx = Bounds.Width * 0.5;
+        double cy = Bounds.Height * 0.5;
+        OriginX = cx - (cx - OriginX) * ratio;
+        OriginY = cy - (cy - OriginY) * ratio;
+        InvalidateVisual();
+    }
+
+    public void ZoomOut()
+    {
+        double factor = 1.0 / 1.25;
+        double oldScale = ScalePixelsPerUnit;
+        ScalePixelsPerUnit = Math.Clamp(ScalePixelsPerUnit * factor, 8.0, 600.0);
+        double ratio = ScalePixelsPerUnit / oldScale;
+        double cx = Bounds.Width * 0.5;
+        double cy = Bounds.Height * 0.5;
+        OriginX = cx - (cx - OriginX) * ratio;
+        OriginY = cy - (cy - OriginY) * ratio;
+        InvalidateVisual();
+    }
+
     public Func<double, double> GetOrCompilePrimaryFunction()
     {
         // If Functions collection exists and has items, use the first visible function

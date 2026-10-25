@@ -173,7 +173,7 @@ public class LieAlgebraCanvas : Control
         // Render Dynkin Diagram Overlay in top-right
         if (ShowDynkinDiagram)
         {
-            RenderDynkinDiagram(context, w - 240, 20, 220, 110, tokens);
+            RenderDynkinDiagram(context, w - 240, 56, 220, 110, tokens);
         }
 
         // Render Cartan Matrix HUD in bottom-left
