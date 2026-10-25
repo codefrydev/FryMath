@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FryMath Studio - Interactive Mathematics & CAS</title>
+    <base href="/FryMath/" />
+    <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+    <div id="splash">
+        <div class="splash-logo">
+            <div class="splash-badge">∑</div>
+            <div>
+                <div class="splash-title">FryMath Studio</div>
+                <div class="splash-subtitle">Interactive Mathematics, CAS & Visual Physics</div>
+            </div>
+        </div>
+        <div class="splash-spinner"></div>
+        <div class="splash-status" id="splash-status">Initializing WebAssembly Runtime...</div>
+    </div>
+
+    <div id="out"></div>
+
+    <script>
+        // Dismiss splash when Avalonia canvas attaches to #out
+        const outDiv = document.getElementById('out');
+        const splash = document.getElementById('splash');
+        const observer = new MutationObserver((mutations, obs) => {
+            if (outDiv && outDiv.children.length > 0) {
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 450);
+                }
+                obs.disconnect();
+            }
+        });
+        if (outDiv) {
+            observer.observe(outDiv, { childList: true, subtree: true });
+        }
+    </script>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
