@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>FryMath.Browser</AssemblyName>
     <RootNamespace>FryMath.Browser</RootNamespace>
+    <WasmBuildNative Condition="'$(CI)' == 'true' or '$(WasmBuildNative)' == 'true'">true</WasmBuildNative>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,4 +22,19 @@
     <ProjectReference Include="..\FryMath.UI\FryMath.UI.csproj" />
     <ProjectReference Include="..\FryMath.Core\FryMath.Core.csproj" />
   </ItemGroup>
+
+  <!-- Workaround for SkiaSharp WebAssembly native archive linking order -->
+  <Target Name="SkiaSharpWasmLinkingWorkload_Workaround" AfterTargets="_BrowserWasmWriteRspForLinking" Condition="'$(WasmBuildNative)' == 'true'">
+    <ItemGroup>
+      <_WasmLinkStepArgs Remove="@(_EmccLinkStepArgs)" />
+      <_WasmLinkStepArgs Remove="&quot;%(_WasmNativeFileForLinking.Identity)&quot;" />
+      <_WasmLinkDependencies Remove="@(_WasmNativeFileForLinking)" />
+      <_SkiaSharpToReorder Include="@(_WasmNativeFileForLinking)" Condition="$([System.String]::Copy('%(FullPath)').Contains('libSkiaSharp.a'))" />
+      <_WasmNativeFileForLinking Remove="@(_SkiaSharpToReorder)" />
+      <_WasmNativeFileForLinking Include="@(_SkiaSharpToReorder)" />
+      <_EmccLinkStepArgs Include="&quot;%(_WasmNativeFileForLinking.Identity)&quot;" />
+      <_WasmLinkDependencies Include="@(_WasmNativeFileForLinking)" />
+      <_WasmLinkStepArgs Include="@(_EmccLinkStepArgs)" />
+    </ItemGroup>
+  </Target>
 </Project>
