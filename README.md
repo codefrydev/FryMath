@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Assets/app-icon.svg" width="96" height="96" alt="FryMath Logo" />
+</p>
+
 # FryMath
 
 Interactive mathematics studio, symbolic computer algebra system (CAS), and visual simulation laboratory for the **FryWorld** ecosystem.

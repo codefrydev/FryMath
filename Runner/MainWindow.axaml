@@ -5,6 +5,7 @@
         x:Class="FryMath.Plugin.Runner.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="∑ FryMath Studio - Interactive Mathematics &amp; CAS"
+        Icon="/Assets/app-icon.png"
         Width="1360" Height="820"
         MinWidth="960" MinHeight="620"
         WindowStartupLocation="CenterScreen"

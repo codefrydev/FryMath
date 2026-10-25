@@ -36,17 +36,10 @@
 
                     <!-- Studio Logo -->
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="0,0,16,0">
-                        <Border Background="{DynamicResource MathSurfaceHighBrush}"
-                                BorderBrush="{DynamicResource MathAccentCyanBrush}"
-                                BorderThickness="1.5"
-                                CornerRadius="8"
-                                Width="32" Height="32">
-                            <TextBlock Text="∑"
-                                       FontSize="16"
-                                       FontWeight="Bold"
-                                       Foreground="{DynamicResource MathAccentCyanBrush}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
+                        <Border CornerRadius="8"
+                                Width="32" Height="32"
+                                ClipToBounds="True">
+                            <Image Source="avares://FryMath.UI/Assets/app-icon.png" Width="32" Height="32" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">

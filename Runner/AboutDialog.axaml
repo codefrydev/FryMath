@@ -2,22 +2,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="FryMath.Plugin.Runner.AboutDialog"
         Title="About FryMath Studio"
+        Icon="/Assets/app-icon.png"
         Width="440" Height="280"
         WindowStartupLocation="CenterOwner"
         CanResize="False"
         Background="{DynamicResource MathBgBrush}">
 
     <StackPanel Margin="24" Spacing="14" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Border Background="{DynamicResource MathAccentPurpleBrush}"
-                CornerRadius="{DynamicResource MathRadiusMd}"
-                Width="48" Height="48"
+        <Border CornerRadius="{DynamicResource MathRadiusMd}"
+                Width="56" Height="56"
+                ClipToBounds="True"
                 HorizontalAlignment="Center">
-            <TextBlock Text="∑"
-                       FontSize="28"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+            <Image Source="/Assets/app-icon.png" Width="56" Height="56" />
         </Border>
 
         <TextBlock Text="FryMath Studio"
