@@ -4,6 +4,7 @@
   <Folder Name="/src/">
     <Project Path="src/FryMath.Core/FryMath.Core.csproj" />
     <Project Path="src/FryMath.UI/FryMath.UI.csproj" />
+    <Project Path="src/FryMath.Browser/FryMath.Browser.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/FryMath.Core.Tests/FryMath.Core.Tests.csproj" />

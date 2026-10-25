@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages (gh-pages)
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy WebAssembly Studio
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore FryMath.slnx
+
+      - name: Run Core unit tests
+        run: dotnet test tests/FryMath.Core.Tests/FryMath.Core.Tests.csproj -c Release --no-restore --verbosity normal
+
+      - name: Run UI tests
+        run: dotnet test tests/FryMath.UI.Tests/FryMath.UI.Tests.csproj -c Release --no-restore --verbosity normal
+
+      - name: Publish FryMath WebAssembly Browser App
+        run: dotnet publish src/FryMath.Browser/FryMath.Browser.csproj -c Release -o release --nologo
+
+      - name: Configure GitHub Pages (.nojekyll, 404.html, snapshots)
+        shell: bash
+        run: |
+          # 1. Disable Jekyll so that underscore directories (e.g. _framework) are preserved and served
+          touch release/wwwroot/.nojekyll
+
+          # 2. Ensure base href is set to /FryMath/ for codefrydev.in/FryMath
+          sed -i 's|<base href="./" />|<base href="/FryMath/" />|g' release/wwwroot/index.html 2>/dev/null || true
+          sed -i 's|<base href="/" />|<base href="/FryMath/" />|g' release/wwwroot/index.html 2>/dev/null || true
+
+          # 3. Add SPA routing fallback so reloads or subpaths load index.html
+          cp release/wwwroot/index.html release/wwwroot/404.html
+
+          # 4. Copy visual lab snapshots into wwwroot for static preview assets
+          if [ -d snapshots ]; then
+            echo "Staging visual snapshots into wwwroot..."
+            mkdir -p release/wwwroot/snapshots
+            cp -r snapshots/* release/wwwroot/snapshots/
+          fi
+
+      - name: Deploy to gh-pages branch (Old Ways)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: release/wwwroot
+          publish_branch: gh-pages
+          commit_message: "Deploy FryMath WebAssembly Studio to GitHub Pages [skip ci]"
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
